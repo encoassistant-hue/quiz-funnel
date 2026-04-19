@@ -34,16 +34,13 @@ export default function ResultsPage1({ onContinue }: ResultsPage1Props) {
             </span>
           </div>
 
-          {/* SI Joint illustration placeholder */}
-          <div className="w-full h-36 rounded-xl bg-gradient-to-br from-stone-100 to-red-50 border border-stone-200 flex items-center justify-center mb-5 overflow-hidden relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <svg viewBox="0 0 200 140" className="w-full h-full opacity-30">
-                <ellipse cx="100" cy="70" rx="60" ry="45" fill="#e5e7eb" stroke="#d1d5db" strokeWidth="1" />
-                <ellipse cx="100" cy="70" rx="30" ry="22" fill="#fca5a5" stroke="#f87171" strokeWidth="1.5" />
-                <circle cx="100" cy="70" r="8" fill="#ef4444" opacity="0.8" />
-              </svg>
-            </div>
-            <span className="relative text-stone-400 text-xs font-medium">SI Joint — Inflammation Detected</span>
+          {/* SI Joint illustration */}
+          <div className="w-full rounded-xl overflow-hidden mb-5">
+            <img
+              src="https://v3b.fal.media/files/b/0a96de65/3us_l1d3H4RyCRr28HXsw_fmP4kHew.png"
+              alt="SI Joint inflammation"
+              className="w-full object-cover"
+            />
           </div>
 
           {/* Slider scale */}

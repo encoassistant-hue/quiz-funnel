@@ -51,31 +51,23 @@ export default function ResultsPage2() {
         {/* Before/After visual */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-            <div className="w-full h-24 rounded-lg bg-red-100 flex flex-col items-center justify-center mb-2">
-              <svg viewBox="0 0 80 80" className="w-16 h-16">
-                <ellipse cx="40" cy="40" rx="24" ry="18" fill="#fca5a5" stroke="#ef4444" strokeWidth="2" />
-                <ellipse cx="40" cy="40" rx="10" ry="7" fill="#ef4444" opacity="0.7" />
-                {[0, 60, 120, 180, 240, 300].map((angle) => (
-                  <line
-                    key={angle}
-                    x1="40" y1="40"
-                    x2={40 + 28 * Math.cos((angle * Math.PI) / 180)}
-                    y2={40 + 22 * Math.sin((angle * Math.PI) / 180)}
-                    stroke="#ef4444" strokeWidth="1.5" opacity="0.4"
-                  />
-                ))}
-              </svg>
+            <div className="w-full rounded-lg overflow-hidden mb-2">
+              <img
+                src="https://v3b.fal.media/files/b/0a96de65/3us_l1d3H4RyCRr28HXsw_fmP4kHew.png"
+                alt="SI Joint inflamed"
+                className="w-full object-cover"
+              />
             </div>
             <p className="text-red-600 text-xs font-bold">SI Joint NOW</p>
             <p className="text-red-400 text-xs">Inflamed &amp; Unstable</p>
           </div>
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-            <div className="w-full h-24 rounded-lg bg-green-100 flex flex-col items-center justify-center mb-2">
-              <svg viewBox="0 0 80 80" className="w-16 h-16">
-                <ellipse cx="40" cy="40" rx="24" ry="18" fill="#bbf7d0" stroke="#22c55e" strokeWidth="2" />
-                <ellipse cx="40" cy="40" rx="10" ry="7" fill="#22c55e" opacity="0.5" />
-                <path d="M33 40l4 4 8-8" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              </svg>
+            <div className="w-full rounded-lg overflow-hidden mb-2">
+              <img
+                src="https://v3b.fal.media/files/b/0a96de65/y4cvW91ZqhiUVw8QkuhYx_cbjHGqqO.png"
+                alt="SI Joint stabilized"
+                className="w-full object-cover"
+              />
             </div>
             <p className="text-green-700 text-xs font-bold">YOUR GOAL</p>
             <p className="text-green-500 text-xs">Stabilized &amp; Pain-Free</p>

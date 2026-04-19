@@ -1,8 +1,6 @@
 import { QuestionConfig, Screen } from './types';
 
 // Replace these with your own licensed photos for production
-const UNSPLASH = 'https://images.unsplash.com';
-
 export const QUESTIONS: QuestionConfig[] = [
   {
     id: 'q1',
@@ -14,25 +12,25 @@ export const QUESTIONS: QuestionConfig[] = [
         value: '20-29',
         label: '20–29',
         sublabel: 'Years Old',
-        image: `${UNSPLASH}/photo-1571019613454-1cb2f99b2d8b?w=400&h=520&fit=crop&q=80`,
+        image: 'https://v3b.fal.media/files/b/0a96de65/Fl2mPO2XU7KAOsn9loLEo_nArXM1Dx.png',
       },
       {
         value: '30-39',
         label: '30–39',
         sublabel: 'Years Old',
-        image: `${UNSPLASH}/photo-1507003211169-0a1dd7228f2d?w=400&h=520&fit=crop&q=80`,
+        image: 'https://v3b.fal.media/files/b/0a96de65/Rgm5MZtH2fgkGciwHI1TT_fJWQqVpD.png',
       },
       {
         value: '40-49',
         label: '40–49',
         sublabel: 'Years Old',
-        image: `${UNSPLASH}/photo-1552058544-f2b08422138a?w=400&h=520&fit=crop&q=80`,
+        image: 'https://v3b.fal.media/files/b/0a96de65/JJCbFQWUCB4Yck1xezPOe_4QkNcI9B.png',
       },
       {
         value: '50+',
         label: '50+',
         sublabel: 'Years Old',
-        image: `${UNSPLASH}/photo-1559839734-2b71ea197ec2?w=400&h=520&fit=crop&q=80`,
+        image: 'https://v3b.fal.media/files/b/0a96de65/V7LYVkwkME40az49_ejIa_dxwnOTqx.png',
       },
     ],
   },

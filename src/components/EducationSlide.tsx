@@ -37,9 +37,12 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
         <div className="grid grid-cols-2 gap-3 mb-6">
           {/* Left: pain */}
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-            <div className="w-full h-28 rounded-lg bg-red-100 flex flex-col items-center justify-center mb-3 gap-1">
-              <span className="text-3xl">😣</span>
-              <span className="text-red-500 text-xs font-semibold">Ongoing Pain</span>
+            <div className="w-full rounded-lg overflow-hidden mb-3">
+              <img
+                src="https://v3b.fal.media/files/b/0a96de65/5V--_jkfxAjF0BxN_3_Jn_rLSGbo2B.png"
+                alt="Treatments that don't work"
+                className="w-full object-cover"
+              />
             </div>
             <div className="space-y-1.5">
               {['Pain pills ✗', 'Stretching ✗', 'Physio ✗'].map((t) => (
@@ -53,9 +56,12 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
 
           {/* Right: solution */}
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-            <div className="w-full h-28 rounded-lg bg-green-100 flex flex-col items-center justify-center mb-3 gap-1">
-              <span className="text-3xl">✅</span>
-              <span className="text-green-600 text-xs font-semibold">Root Cause Fix</span>
+            <div className="w-full rounded-lg overflow-hidden mb-3">
+              <img
+                src="https://v3b.fal.media/files/b/0a96de65/gbBHK6jRYyyoBKYvlCXF6_FtZctKyz.png"
+                alt="OrthoBelt root cause fix"
+                className="w-full object-cover"
+              />
             </div>
             <div className="space-y-1.5">
               {['SI Joint ✓', 'Stabilization ✓', 'OrthoBelt ✓'].map((t) => (
