@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { QuestionConfig, QuestionOption } from '@/lib/types';
+import { withBasePath } from '@/lib/withBasePath';
 import BodyDiagram from './BodyDiagram';
 
 interface QuizQuestionProps {
@@ -34,7 +35,7 @@ function PhotoCard({ option, isSelected, onClick }: { option: QuestionOption; is
       >
         {/* Image fills card */}
         <img
-          src={option.image}
+          src={withBasePath(option.image!)}
           alt={option.label}
           className="absolute inset-0 w-full h-full object-cover object-center"
           loading="lazy"
