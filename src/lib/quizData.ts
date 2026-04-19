@@ -1,27 +1,52 @@
 import { QuestionConfig, Screen } from './types';
 
+// Replace these with your own licensed photos for production
+const UNSPLASH = 'https://images.unsplash.com';
+
 export const QUESTIONS: QuestionConfig[] = [
   {
     id: 'q1',
     screen: 'q1',
+    layout: 'grid',
     question: 'How old are you?',
     options: [
-      { value: '20-29', label: '20–29 Years Old' },
-      { value: '30-39', label: '30–39 Years Old' },
-      { value: '40-49', label: '40–49 Years Old' },
-      { value: '50+', label: '50+ Years Old' },
+      {
+        value: '20-29',
+        label: '20–29',
+        sublabel: 'Years Old',
+        image: `${UNSPLASH}/photo-1571019613454-1cb2f99b2d8b?w=400&h=520&fit=crop&q=80`,
+      },
+      {
+        value: '30-39',
+        label: '30–39',
+        sublabel: 'Years Old',
+        image: `${UNSPLASH}/photo-1507003211169-0a1dd7228f2d?w=400&h=520&fit=crop&q=80`,
+      },
+      {
+        value: '40-49',
+        label: '40–49',
+        sublabel: 'Years Old',
+        image: `${UNSPLASH}/photo-1534528526-95d3fe7c0df6?w=400&h=520&fit=crop&q=80`,
+      },
+      {
+        value: '50+',
+        label: '50+',
+        sublabel: 'Years Old',
+        image: `${UNSPLASH}/photo-1559839734-2b71ea197ec2?w=400&h=520&fit=crop&q=80`,
+      },
     ],
   },
   {
     id: 'q2',
     screen: 'q2',
+    layout: 'grid',
     question: 'Where do you feel your pain most?',
     options: [
-      { value: 'lower-back', label: 'Lower back' },
-      { value: 'hip-buttock', label: 'Hip or buttock' },
-      { value: 'sciatica', label: 'Shooting down one leg (sciatica)' },
-      { value: 'everything', label: 'A bit of everything' },
-      { value: 'not-sure', label: "I'm not sure, it moves around" },
+      { value: 'lower-back', label: 'Lower back', bodyPart: 'lower-back' },
+      { value: 'hip-buttock', label: 'Hip or buttock', bodyPart: 'hip-buttock' },
+      { value: 'sciatica', label: 'Shooting down one leg', sublabel: '(sciatica)', bodyPart: 'sciatica' },
+      { value: 'everything', label: 'A bit of everything', bodyPart: 'everything' },
+      { value: 'not-sure', label: "I'm not sure", sublabel: 'it moves around', bodyPart: 'not-sure' },
     ],
   },
   {
@@ -37,14 +62,30 @@ export const QUESTIONS: QuestionConfig[] = [
   {
     id: 'q4',
     screen: 'q4',
+    layout: 'grid',
     question: 'How much does your back pain affect your daily life?',
     options: [
       {
         value: 'a-lot',
-        label: "A lot (I've had to stop activities I used to enjoy)",
+        label: 'A lot',
+        sublabel: "I've had to stop activities I used to enjoy",
+        emoji: '😣',
+        bg: 'from-red-100 to-red-50',
       },
-      { value: 'some', label: "Some (I push through, but it's always there)" },
-      { value: 'a-little', label: 'A little (It comes and goes)' },
+      {
+        value: 'some',
+        label: 'Some',
+        sublabel: "I push through, but it's always there",
+        emoji: '😤',
+        bg: 'from-amber-100 to-amber-50',
+      },
+      {
+        value: 'a-little',
+        label: 'A little',
+        sublabel: 'It comes and goes',
+        emoji: '😌',
+        bg: 'from-green-100 to-green-50',
+      },
     ],
   },
   {
@@ -77,36 +118,73 @@ export const QUESTIONS: QuestionConfig[] = [
   {
     id: 'q7',
     screen: 'q7',
-    question:
-      "What's your biggest concern if your back pain continues unchanged?",
+    layout: 'grid',
+    question: "What's your biggest concern if your back pain continues unchanged?",
     options: [
       {
         value: 'mobility',
-        label: "It will get worse, and I'll lose even more mobility",
+        label: 'Losing mobility',
+        sublabel: "It will get worse over time",
+        emoji: '🦽',
+        bg: 'from-red-100 to-orange-50',
       },
       {
         value: 'activities',
-        label: "I'll have to give up activities I love permanently",
+        label: 'Giving up activities',
+        sublabel: "Things I love, permanently",
+        emoji: '⛔',
+        bg: 'from-orange-100 to-amber-50',
       },
       {
         value: 'money',
-        label: "I'll keep wasting money on treatments that don't work",
+        label: 'Wasting money',
+        sublabel: "On treatments that don't work",
+        emoji: '💸',
+        bg: 'from-yellow-100 to-yellow-50',
       },
       {
         value: 'surgery',
-        label: "I'll end up needing surgery",
+        label: 'Needing surgery',
+        sublabel: "As a last resort",
+        emoji: '🏥',
+        bg: 'from-purple-100 to-purple-50',
       },
     ],
   },
   {
     id: 'q8',
     screen: 'q8',
+    layout: 'grid',
     question: 'How motivated are you to fix your back pain?',
     options: [
-      { value: 'extremely', label: 'Extremely (I need this fixed now)' },
-      { value: 'very', label: "Very (I'm ready to try something new)" },
-      { value: 'somewhat', label: "Somewhat (I've been let down before)" },
-      { value: 'depends', label: 'It depends on the solution' },
+      {
+        value: 'extremely',
+        label: 'Extremely',
+        sublabel: 'I need this fixed now',
+        emoji: '🔥',
+        bg: 'from-amber-100 to-orange-50',
+      },
+      {
+        value: 'very',
+        label: 'Very motivated',
+        sublabel: "Ready to try something new",
+        emoji: '💪',
+        bg: 'from-green-100 to-emerald-50',
+      },
+      {
+        value: 'somewhat',
+        label: 'Somewhat',
+        sublabel: "I've been let down before",
+        emoji: '🤞',
+        bg: 'from-blue-100 to-sky-50',
+      },
+      {
+        value: 'depends',
+        label: 'It depends',
+        sublabel: 'On the solution',
+        emoji: '🤔',
+        bg: 'from-stone-100 to-stone-50',
+      },
     ],
   },
 ];

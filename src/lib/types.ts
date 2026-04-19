@@ -29,6 +29,11 @@ export type Answers = {
 export interface QuestionOption {
   value: string;
   label: string;
+  sublabel?: string;
+  image?: string;      // Unsplash URL for photo cards
+  bodyPart?: string;   // Key for BodyDiagram SVG
+  emoji?: string;      // Emoji for icon cards
+  bg?: string;         // Tailwind gradient for icon cards
 }
 
 export interface QuestionConfig {
@@ -37,4 +42,5 @@ export interface QuestionConfig {
   question: string;
   options: QuestionOption[];
   multiSelect?: boolean;
+  layout?: 'list' | 'grid';
 }
