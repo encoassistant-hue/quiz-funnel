@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { withBasePath } from '@/lib/withBasePath';
 
 interface EducationSlideProps {
   onContinue: () => void;
@@ -39,7 +40,7 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-3">
               <img
-                src="/education/treatments-dont-work.png"
+                src={withBasePath('/education/treatments-dont-work.png')}
                 alt="Treatments that don't work"
                 className="w-full object-cover"
               />
@@ -58,7 +59,7 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-3">
               <img
-                src="/education/orthobelt-root-cause-fix.png"
+                src={withBasePath('/education/orthobelt-root-cause-fix.png')}
                 alt="OrthoBelt root cause fix"
                 className="w-full object-cover"
               />
@@ -78,7 +79,7 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
         <div className="bg-stone-800 rounded-2xl p-5 mb-8 text-center">
           <p className="text-white text-base leading-relaxed">
             If you want to <strong className="text-amber-400">actually fix</strong> your back pain,
-            you need to stabilize the SI joint — and that's exactly what the{' '}
+            you need to stabilise the SI joint — and that&#39;s exactly what the{' '}
             <strong className="text-amber-400">OrthoBelt</strong> was designed to do.
           </p>
         </div>

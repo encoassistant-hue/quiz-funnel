@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { withBasePath } from '@/lib/withBasePath';
 
 interface ResultsPage1Props {
   onContinue: () => void;
@@ -37,7 +38,7 @@ export default function ResultsPage1({ onContinue }: ResultsPage1Props) {
           {/* SI Joint illustration */}
           <div className="w-full rounded-xl overflow-hidden mb-5">
             <img
-              src="/education/si-joint-inflamed.png"
+              src={withBasePath('/education/si-joint-inflamed.png')}
               alt="SI Joint inflammation"
               className="w-full object-cover"
             />
@@ -65,7 +66,7 @@ export default function ResultsPage1({ onContinue }: ResultsPage1Props) {
 
         {/* Warning box */}
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex gap-3">
-          <span className="text-xl flex-shrink-0">⚠️</span>
+          <span className="text-xl shrink-0">⚠️</span>
           <p className="text-red-800 text-sm leading-relaxed">
             <strong>HIGH level.</strong> Your symptoms suggest significant SI joint instability.
             This is likely caused by prolonged sitting, repetitive movement, and lack of targeted

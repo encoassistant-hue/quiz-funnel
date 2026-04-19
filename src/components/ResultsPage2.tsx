@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { withBasePath } from '@/lib/withBasePath';
 
 const PRODUCT_URL = 'https://us.orthotal.com/products/orthobelt';
 
@@ -34,13 +35,13 @@ export default function ResultsPage2() {
         {/* Checklist */}
         <div className="bg-green-50 border border-green-200 rounded-2xl p-5 mb-6 space-y-3">
           <div className="flex items-start gap-3">
-            <span className="text-green-500 text-lg flex-shrink-0">✅</span>
+            <span className="text-green-500 text-lg shrink-0">✅</span>
             <p className="text-stone-700 text-sm leading-relaxed">
               First relief after just <strong>1 day</strong> of wearing the OrthoBelt.
             </p>
           </div>
           <div className="flex items-start gap-3">
-            <span className="text-green-500 text-lg flex-shrink-0">✅</span>
+            <span className="text-green-500 text-lg shrink-0">✅</span>
             <p className="text-stone-700 text-sm leading-relaxed">
               Significant reduction in pain and improved mobility by{' '}
               <strong>{thirtyDaysOut}</strong>.
@@ -53,7 +54,7 @@ export default function ResultsPage2() {
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-2">
               <img
-                src="/education/si-joint-inflamed.png"
+                src={withBasePath('/education/si-joint-inflamed.png')}
                 alt="SI Joint inflamed"
                 className="w-full object-cover"
               />
@@ -64,8 +65,8 @@ export default function ResultsPage2() {
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-2">
               <img
-                src="/education/si-joint-stabilized.png"
-                alt="SI Joint stabilized"
+                src={withBasePath('/education/si-joint-stabilized.png')}
+                alt="SI Joint stabilised"
                 className="w-full object-cover"
               />
             </div>
