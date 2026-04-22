@@ -7,8 +7,10 @@ interface LandingPageProps {
 }
 
 export default function LandingPage({ onGenderSelect }: LandingPageProps) {
+  const genderOptions = ['Male', 'Female'] as const;
+
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-950">
+    <div className="relative min-h-screen w-full self-stretch overflow-y-auto flex flex-col items-center justify-center overflow-x-hidden bg-gray-950 pb-16 md:pb-0">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -90,12 +92,12 @@ export default function LandingPage({ onGenderSelect }: LandingPageProps) {
         </div>
 
         {/* CTA */}
-        <div>
+        <div className="hidden md:block">
           <p className="text-white/60 text-sm uppercase tracking-widest mb-4">
             Take the free 60-second quiz:
           </p>
           <div className="flex gap-4 justify-center">
-            {['Male', 'Female'].map((gender) => (
+            {genderOptions.map((gender) => (
               <motion.button
                 key={gender}
                 whileHover={{ scale: 1.03 }}
@@ -112,7 +114,12 @@ export default function LandingPage({ onGenderSelect }: LandingPageProps) {
             100% free · No credit card required · Results in 60 seconds
           </p>
         </div>
+
+        <p className="text-white/40 text-xs md:hidden">
+          100% free · No credit card required · Results in 60 seconds
+        </p>
       </motion.div>
+
     </div>
   );
 }

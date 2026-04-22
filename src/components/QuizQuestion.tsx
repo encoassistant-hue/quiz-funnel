@@ -171,7 +171,7 @@ export default function QuizQuestion({ config, currentAnswer, onAnswer }: QuizQu
   const hasEmoji = config.options.some(o => o.emoji);
 
   return (
-    <div className="w-full max-w-sm mx-auto px-4 py-8">
+    <div className="w-full max-w-sm mx-auto px-4 py-8 max-md:pb-[100px]">
       <motion.h2
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -225,14 +225,21 @@ export default function QuizQuestion({ config, currentAnswer, onAnswer }: QuizQu
       )}
 
       {config.multiSelect && (
-        <motion.button
-          animate={{ opacity: selected.length > 0 ? 1 : 0.4 }}
-          onClick={() => selected.length > 0 && onAnswer(selected)}
-          disabled={selected.length === 0}
-          className="mt-5 w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg tracking-wide transition-colors duration-200 disabled:opacity-40"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed bottom-0 left-0 right-0 z-20 bg-[#FAF7F2]/95 backdrop-blur-sm border-t border-stone-200 px-6 py-3 md:static md:bg-transparent md:border-0 md:p-0 md:mt-5"
         >
-          Continue →
-        </motion.button>
+          <motion.button
+            animate={{ opacity: selected.length > 0 ? 1 : 0.4 }}
+            onClick={() => selected.length > 0 && onAnswer(selected)}
+            disabled={selected.length === 0}
+            className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg tracking-wide transition-colors duration-200 disabled:opacity-40"
+          >
+            Continue →
+          </motion.button>
+        </motion.div>
       )}
     </div>
   );

@@ -9,7 +9,7 @@ interface EducationSlideProps {
 
 export default function EducationSlide({ onContinue }: EducationSlideProps) {
   return (
-    <div className="w-full max-w-xl mx-auto px-6 py-10">
+    <div className="w-full max-w-xl mx-auto px-6 py-10 max-md:pb-[80px]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-3">
               <img
-                src={withBasePath('/education/orthobelt-root-cause-fix.png')}
+                src={withBasePath('/education/orthobelt-root-cause-fix.jpg')}
                 alt="OrthoBelt root cause fix"
                 className="w-full object-cover"
               />
@@ -78,20 +78,27 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
         {/* Conclusion */}
         <div className="bg-stone-800 rounded-2xl p-5 mb-8 text-center">
           <p className="text-white text-base leading-relaxed">
-            If you want to <strong className="text-amber-400">actually fix</strong> your back pain,
+            If you want to <strong className="text-amber-400">actually fix </strong> your back pain,
             you need to stabilise the SI joint — and that&#39;s exactly what the{' '}
             <strong className="text-amber-400">OrthoBelt</strong> was designed to do.
           </p>
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={onContinue}
-          className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg tracking-wide transition-colors duration-200"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed bottom-0 left-0 right-0 z-20 bg-[#FAF7F2]/95 backdrop-blur-sm border-t border-stone-200 px-6 py-3 md:static md:bg-transparent md:border-0 md:p-0"
         >
-          Continue →
-        </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onContinue}
+            className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg tracking-wide transition-colors duration-200"
+          >
+            Continue →
+          </motion.button>
+        </motion.div>
       </motion.div>
     </div>
   );

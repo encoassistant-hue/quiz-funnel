@@ -1,9 +1,14 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { withBasePath } from '@/lib/withBasePath';
 
 const PRODUCT_URL = 'https://us.orthotal.com/products/orthobelt';
+
+interface ResultsPage2Props {
+  onClaimDiscount?: () => void;
+}
 
 function getDynamicDate(daysFromNow: number): string {
   const d = new Date();
@@ -11,11 +16,72 @@ function getDynamicDate(daysFromNow: number): string {
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-export default function ResultsPage2() {
+export default function ResultsPage2({ onClaimDiscount }: ResultsPage2Props) {
   const thirtyDaysOut = getDynamicDate(30);
 
+  useEffect(() => {
+    let cancelled = false;
+    let rafId: number;
+
+    const cancel = () => {
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+    };
+
+    window.addEventListener('wheel', cancel, { once: true, passive: true });
+    window.addEventListener('touchstart', cancel, { once: true, passive: true });
+
+    const timer = setTimeout(() => {
+      if (cancelled) return;
+
+      const hasScrollableContent =
+        document.documentElement.scrollHeight > window.innerHeight;
+      const prefersReducedMotion =
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!hasScrollableContent || prefersReducedMotion) {
+        window.removeEventListener('wheel', cancel);
+        window.removeEventListener('touchstart', cancel);
+        return;
+      }
+
+      const startY = window.scrollY;
+      const targetY = document.body.scrollHeight;
+      const distance = targetY - startY;
+      const duration = 2500; // ms — slow, deliberate scroll
+      const startTime = performance.now();
+
+      const step = (currentTime: number) => {
+        if (cancelled) return;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeInOutCubic
+        const ease =
+          progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        window.scrollTo(0, startY + distance * ease);
+        if (progress < 1) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          window.removeEventListener('wheel', cancel);
+          window.removeEventListener('touchstart', cancel);
+        }
+      };
+
+      rafId = requestAnimationFrame(step);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchstart', cancel);
+    };
+  }, []);
+
   return (
-    <div className="w-full max-w-xl mx-auto px-6 py-10">
+    <div className="w-full max-w-xl mx-auto px-6 py-10 max-md:pb-[125px]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -113,20 +179,28 @@ export default function ResultsPage2() {
         </div>
 
         {/* CTA */}
-        <motion.a
-          href={PRODUCT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="block w-full py-5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xl tracking-wide text-center transition-colors duration-200 shadow-lg shadow-amber-200"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed bottom-0 left-0 right-0 z-20 bg-[#FAF7F2]/95 backdrop-blur-sm border-t border-stone-200 px-6 py-3 md:static md:bg-transparent md:border-0 md:p-0"
         >
-          CLAIM YOUR DISCOUNT ▷
-        </motion.a>
+          <motion.a
+            href={PRODUCT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClaimDiscount}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="block w-full py-5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xl tracking-wide text-center transition-colors duration-200 shadow-lg shadow-amber-200"
+          >
+            CLAIM YOUR DISCOUNT ▷
+          </motion.a>
 
-        <p className="text-center text-stone-400 text-xs mt-4">
-          30-day money-back guarantee · Free shipping · Ships within 24h
-        </p>
+          <p className="text-center text-stone-400 text-xs mt-3">
+            30-day money-back guarantee · Free shipping · Ships within 24h
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );

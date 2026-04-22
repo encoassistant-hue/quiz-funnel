@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "serve out -l 3000",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze:survey": "node scripts/analyzeSurvey.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

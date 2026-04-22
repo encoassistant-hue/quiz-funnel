@@ -13,6 +13,50 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Analytics
+
+The quiz writes analytics directly to Supabase from the browser. This is compatible with the repo's static export setup.
+
+For scalable dashboard reads, the analytics page now uses Supabase SQL functions instead of loading the full raw event table into the browser.
+
+Set the analytics environment in your app config:
+
+```bash
+NEXT_PUBLIC_ANALYTICS_ENV=dev
+```
+
+Recommended values:
+
+- `dev` for local work
+- `preview` for staging/preview deploys
+- `prod` for production
+
+One-time Supabase step:
+
+1. Open SQL Editor in Supabase.
+2. Run `supabase/analytics_functions.sql`.
+
+The dashboard defaults to `prod` so local/dev traffic does not pollute the main view.
+
+Inspect analytics in the browser:
+
+```bash
+http://localhost:3000/analytics
+```
+
+Run the terminal report:
+
+```bash
+npm run analyze:survey
+```
+
+Remove the manual test row if needed:
+
+```sql
+delete from public.quiz_events
+where session_id = 'manual-test-session';
+```
+
 ## A/B Versions
 
 | URL | Version |
