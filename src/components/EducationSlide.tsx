@@ -90,7 +90,7 @@ export default function EducationSlide({ onContinue }: EducationSlideProps) {
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6">
           <p className="text-stone-700 text-base leading-relaxed text-center">
             Stretching, physiotherapy, and pain medication{' '}
-            <strong className="text-stone-900">don&#39;t work long-term</strong> because they don&#39;t
+            <strong className="text-stone-900">don&#39;t work long-term </strong> because they don&#39;t
             address the SI joint — the <strong className="text-amber-700">real source</strong> of
             your pain.
           </p>

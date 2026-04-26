@@ -152,8 +152,8 @@ export default function ResultsPage2({ onClaimDiscount }: ResultsPage2Props) {
             <thead>
               <tr className="bg-stone-50 border-b border-stone-200">
                 <th className="text-left px-4 py-3 text-stone-500 font-semibold">Metric</th>
-                <th className="text-center px-3 py-3 text-red-500 font-semibold">Now 🔴</th>
-                <th className="text-center px-3 py-3 text-green-600 font-semibold">Your Goal 🟢</th>
+                <th className="text-center px-3 py-3  font-bold">Now</th>
+                <th className="text-center px-3 py-3  font-bold">Your Goal</th>
               </tr>
             </thead>
             <tbody>
@@ -178,7 +178,7 @@ export default function ResultsPage2({ onClaimDiscount }: ResultsPage2Props) {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-center">
           <p className="text-amber-800 text-sm font-medium">
             🎉 Based on your answers, you qualify for an{' '}
-            <strong className="text-amber-600">exclusive 20% discount</strong>. This offer is
+            <strong className="text-amber-600">exclusive offer</strong>. This offer is
             reserved for quiz completers only.
           </p>
         </div>
