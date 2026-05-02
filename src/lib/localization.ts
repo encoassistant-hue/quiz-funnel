@@ -1,19 +1,17 @@
 import { Localization, LocalizationLocale, LocalizationSlug } from './types';
 
-const PRODUCT_URL = 'https://us.orthotal.com/products/orthobelt';
-
 export const LOCALIZATIONS: Record<LocalizationSlug, Localization> = {
   'orthogurtel-de': {
     locale: 'de-DE',
     market: 'de',
     slug: 'orthogurtel-de',
-    productUrl: PRODUCT_URL,
+    productUrl: 'https://orthotal.com/products/orthogurtel-10',
   },
   'orthobelt-us': {
     locale: 'en-US',
     market: 'us',
     slug: 'orthobelt-us',
-    productUrl: PRODUCT_URL,
+    productUrl: 'https://us.orthotal.com/products/orthobelt',
   },
 };
 
