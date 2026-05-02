@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 import QuizFunnelEntry from '@/components/QuizFunnelEntry';
 import { LOCALIZATIONS } from '@/lib/localization';
+import { getQuizMetadata } from '@/lib/pageMetadata';
+
+export const metadata = getQuizMetadata(LOCALIZATIONS['orthobelt-us'].locale);
 
 export default function OrthobeltUsPage() {
   return (

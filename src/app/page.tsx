@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 import QuizFunnelEntry from '@/components/QuizFunnelEntry';
 import { DEFAULT_LOCALIZATION } from '@/lib/localization';
+import { getQuizMetadata } from '@/lib/pageMetadata';
+
+export const metadata = getQuizMetadata(DEFAULT_LOCALIZATION.locale);
 
 export default function Home() {
   return (

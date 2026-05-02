@@ -55,7 +55,13 @@ export type ResultsPage2Content = {
   guaranteeText: string;
 };
 
+export type BrandContent = {
+  productName: string;
+  productNameParts: [string, string];
+};
+
 export type QuizContent = {
+  brand: BrandContent;
   questions: QuestionConfig[];
   multiSelectContinueLabel: string;
   landing: LandingPageContent;
@@ -63,6 +69,11 @@ export type QuizContent = {
   education: EducationSlideContent;
   results2: ResultsPage2Content;
 };
+
+const ENGLISH_PRODUCT_NAME = 'OrthoBelt';
+const ENGLISH_PRODUCT_NAME_PARTS: [string, string] = ['Ortho', 'Belt'];
+const GERMAN_PRODUCT_NAME = 'Orthogürtel';
+const GERMAN_PRODUCT_NAME_PARTS: [string, string] = ['Ortho', 'gürtel'];
 
 const ENGLISH_QUESTIONS: QuestionConfig[] = [
   {
@@ -132,7 +143,7 @@ const ENGLISH_QUESTIONS: QuestionConfig[] = [
       { value: 'physio', label: 'Physiotherapy' },
       { value: 'cortisone', label: 'Cortisone injections' },
       { value: 'ergonomic', label: 'Ergonomic chair / standing desk' },
-      { value: 'back-brace', label: 'Back brace or support belt' },
+      { value: 'back-brace', label: `Back brace or ${ENGLISH_PRODUCT_NAME}` },
       { value: 'others', label: 'Others' },
       { value: 'nothing', label: 'Nothing yet' },
     ],
@@ -231,7 +242,7 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
       { value: 'physio', label: 'Physiotherapie' },
       { value: 'cortisone', label: 'Kortison-Injektionen' },
       { value: 'ergonomic', label: 'Ergonomischer Stuhl / Stehschreibtisch' },
-      { value: 'back-brace', label: 'Ruckenbandage oder Stutzgurt' },
+      { value: 'back-brace', label: `Rückenbandage oder ${GERMAN_PRODUCT_NAME}` },
       { value: 'others', label: 'Sonstiges' },
       { value: 'nothing', label: 'Noch nichts' },
     ],
@@ -264,6 +275,10 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
 
 export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
   'en-US': {
+    brand: {
+      productName: ENGLISH_PRODUCT_NAME,
+      productNameParts: ENGLISH_PRODUCT_NAME_PARTS,
+    },
     questions: ENGLISH_QUESTIONS,
     multiSelectContinueLabel: 'Continue ->',
     landing: {
@@ -276,7 +291,7 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
         'Find out how fast you can experience relief',
         'Unlock a private 20% off discount if eligible',
       ],
-      testimonialQuote: 'After 2 years of physiotherapy and cortisone injections with no lasting relief, the OrthoBelt gave me my life back in under 3 weeks.',
+      testimonialQuote: `After 2 years of physiotherapy and cortisone injections with no lasting relief, the ${ENGLISH_PRODUCT_NAME} gave me my life back in under 3 weeks.`,
       testimonialAuthor: 'Mark T., 52 - Verified Buyer',
       ctaLabel: 'Take the free 60-second quiz:',
       freeDisclaimer: '100% free · No credit card required · Results in 60 seconds',
@@ -308,9 +323,9 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
       insight: 'Stretching, physiotherapy, and pain medication do not work long-term because they do not address the SI joint - the real source of your pain.',
       symptomTags: ['Pain pills x', 'Stretching x', 'Physio x'],
       symptomFooter: 'Treats symptoms only',
-      solutionTags: ['SI Joint check', 'Stabilization check', 'OrthoBelt check'],
+      solutionTags: ['SI Joint check', 'Stabilization check', `${ENGLISH_PRODUCT_NAME} check`],
       solutionFooter: 'Addresses root cause',
-      conclusion: 'If you want to actually fix your back pain, you need to stabilize the SI joint - and that is exactly what the OrthoBelt was designed to do.',
+      conclusion: `If you want to actually fix your back pain, you need to stabilize the SI joint - and that is exactly what the ${ENGLISH_PRODUCT_NAME} was designed to do.`,
       continueLabel: 'Continue ->',
     },
     results2: {
@@ -319,7 +334,7 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
       titleHighlight: '30 Days Away',
       titleEnd: 'From a Pain-Free Back!',
       checklist: [
-        'First relief after just 1 day of wearing the OrthoBelt.',
+        `First relief after just 1 day of wearing the ${ENGLISH_PRODUCT_NAME}.`,
         'Significant reduction in pain and improved mobility by {date}.',
       ],
       nowLabel: 'SI Joint NOW',
@@ -338,6 +353,10 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
     },
   },
   'de-DE': {
+    brand: {
+      productName: GERMAN_PRODUCT_NAME,
+      productNameParts: GERMAN_PRODUCT_NAME_PARTS,
+    },
     questions: GERMAN_QUESTIONS,
     multiSelectContinueLabel: 'Weiter ->',
     landing: {
@@ -350,7 +369,7 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
         'Finden Sie heraus, wie schnell Sie Erleichterung spuren konnen',
         'Sichern Sie sich 20% privaten Quiz-Rabatt, wenn Sie geeignet sind',
       ],
-      testimonialQuote: 'Nach 2 Jahren Physiotherapie und Kortison-Injektionen ohne nachhaltige Besserung hat mir der OrthoBelt mein Leben in weniger als 3 Wochen zuruckgegeben.',
+      testimonialQuote: `Nach 2 Jahren Physiotherapie und Kortison-Injektionen ohne nachhaltige Besserung hat mir der ${GERMAN_PRODUCT_NAME} mein Leben in weniger als 3 Wochen zuruckgegeben.`,
       testimonialAuthor: 'Mark T., 52 - Verifizierter Kaufer',
       ctaLabel: 'Machen Sie das kostenlose 60-Sekunden-Quiz:',
       freeDisclaimer: '100% kostenlos · Keine Kreditkarte erforderlich · Ergebnis in 60 Sekunden',
@@ -382,9 +401,9 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
       insight: 'Dehnen, Physiotherapie und Schmerzmittel wirken langfristig nicht, weil sie das ISG nicht behandeln - die eigentliche Ursache Ihrer Schmerzen.',
       symptomTags: ['Schmerzmittel x', 'Dehnen x', 'Physio x'],
       symptomFooter: 'Behandelt nur Symptome',
-      solutionTags: ['ISG check', 'Stabilisierung check', 'OrthoBelt check'],
+      solutionTags: ['ISG check', 'Stabilisierung check', `${GERMAN_PRODUCT_NAME} check`],
       solutionFooter: 'Behebt die Ursache',
-      conclusion: 'Wenn Sie Ihre Ruckenschmerzen wirklich losen wollen, mussen Sie das ISG stabilisieren - genau dafur wurde der OrthoBelt entwickelt.',
+      conclusion: `Wenn Sie Ihre Ruckenschmerzen wirklich losen wollen, mussen Sie das ISG stabilisieren - genau dafur wurde der ${GERMAN_PRODUCT_NAME} entwickelt.`,
       continueLabel: 'Weiter ->',
     },
     results2: {
@@ -393,7 +412,7 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
       titleHighlight: '30 Tage',
       titleEnd: 'von einem schmerzfreien Rucken entfernt!',
       checklist: [
-        'Erste Erleichterung schon nach 1 Tag mit dem OrthoBelt.',
+        `Erste Erleichterung schon nach 1 Tag mit dem ${GERMAN_PRODUCT_NAME}.`,
         'Deutlich weniger Schmerzen und bessere Beweglichkeit bis zum {date}.',
       ],
       nowLabel: 'ISG JETZT',

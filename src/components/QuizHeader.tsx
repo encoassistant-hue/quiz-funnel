@@ -2,13 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { Screen } from '@/lib/types';
-import { getProgressPercent, QUIZ_SCREENS } from '@/lib/quizData';
+import {BrandContent, getProgressPercent, QUIZ_SCREENS} from '@/lib/quizData';
 
 interface QuizHeaderProps {
   screen: Screen;
+  brand: BrandContent;
 }
 
-export default function QuizHeader({ screen }: QuizHeaderProps) {
+export default function QuizHeader({ screen, brand }: QuizHeaderProps) {
   const percent = getProgressPercent(screen);
   const showProgress = QUIZ_SCREENS.includes(screen);
 
@@ -17,8 +18,7 @@ export default function QuizHeader({ screen }: QuizHeaderProps) {
       {/* Logo bar */}
       <div className="flex items-center justify-center py-5 px-6">
         <span className="text-stone-800 text-xl font-bold tracking-widest uppercase">
-          Ortho<span className="text-amber-600">Belt</span>
-        </span>
+            {brand.productNameParts[0]}<span className="text-amber-600">{brand.productNameParts[1]}</span>        </span>
       </div>
 
       {/* Progress bar */}

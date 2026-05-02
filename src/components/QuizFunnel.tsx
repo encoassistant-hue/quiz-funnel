@@ -143,11 +143,11 @@ export default function QuizFunnel({ version, localization }: QuizFunnelProps) {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] flex flex-col">
-      {showHeader && <QuizHeader screen={screen} />}
+      {showHeader && <QuizHeader screen={screen} brand={content.brand}/>}
 
       <div className="flex-1 flex items-start justify-center">
         {screen === 'landing' ? (
-          <LandingPage onGenderSelect={handleGenderSelect} content={content.landing} />
+          <LandingPage onGenderSelect={handleGenderSelect} content={content.landing} brand={content.brand} />
         ) : (
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
@@ -170,7 +170,13 @@ export default function QuizFunnel({ version, localization }: QuizFunnelProps) {
 
               {screen === 'results1' && <ResultsPage1 onContinue={() => advance()} content={content.results1} />}
 
-              {screen === 'education' && <EducationSlide onContinue={() => advance()} content={content.education} />}
+              {screen === 'education' && (
+                <EducationSlide
+                  onContinue={() => advance()}
+                  content={content.education}
+                  productName={content.brand.productName}
+                />
+              )}
 
               {screen === 'results2' && (
                 <ResultsPage2

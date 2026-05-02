@@ -9,9 +9,10 @@ import { withBasePath } from '@/lib/withBasePath';
 interface EducationSlideProps {
   onContinue: () => void;
   content: EducationSlideContent;
+  productName: string;
 }
 
-export default function EducationSlide({ onContinue, content }: EducationSlideProps) {
+export default function EducationSlide({ onContinue, content, productName }: EducationSlideProps) {
   useEffect(() => {
     let cancelled = false;
     let rafId: number;
@@ -112,7 +113,7 @@ export default function EducationSlide({ onContinue, content }: EducationSlidePr
             <div className="relative w-full rounded-lg overflow-hidden mb-3 aspect-4/3">
               <Image
                 src={withBasePath('/education/orthobelt-root-cause-fix.png')}
-                alt="OrthoBelt root cause fix"
+                alt={`${productName} root cause fix`}
                 fill
                 style={{ objectFit: 'cover' }}
               />
