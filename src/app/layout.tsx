@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { sharedMetadata } from "@/lib/pageMetadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,11 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "OrthoBelt — Find Out If the SI Joint Is Causing Your Back Pain",
-  description:
-    "Take the free 60-second quiz to discover the root cause of your back pain and unlock an exclusive discount on OrthoBelt.",
-};
+export const metadata: Metadata = sharedMetadata;
 
 export default function RootLayout({
   children,

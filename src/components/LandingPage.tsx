@@ -1,14 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { LandingPageContent } from '@/lib/quizData';
+import { BrandContent, LandingPageContent } from '@/lib/quizData';
 
 interface LandingPageProps {
   onGenderSelect: (gender: string) => void;
   content: LandingPageContent;
+  brand: BrandContent;
 }
 
-export default function LandingPage({ onGenderSelect, content }: LandingPageProps) {
+export default function LandingPage({ onGenderSelect, content, brand }: LandingPageProps) {
   return (
     <div className="relative min-h-screen w-full self-stretch overflow-y-auto flex flex-col items-center justify-center overflow-x-hidden bg-gray-950 pb-16 md:pb-0">
       <div
@@ -27,7 +28,7 @@ export default function LandingPage({ onGenderSelect, content }: LandingPageProp
       >
         <div className="mb-10">
           <span className="text-white text-2xl font-bold tracking-widest uppercase">
-            Ortho<span className="text-amber-400">Belt</span>
+            {brand.productNameParts[0]}<span className="text-amber-400">{brand.productNameParts[1]}</span>
           </span>
         </div>
 
