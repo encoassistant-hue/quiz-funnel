@@ -143,7 +143,7 @@ export default function QuizFunnel({ version, localization }: QuizFunnelProps) {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] flex flex-col">
-      {showHeader && <QuizHeader screen={screen} brand={content.brand}/>}
+      {showHeader && <QuizHeader screen={screen} />}
 
       <div className="flex-1 flex items-start justify-center">
         {screen === 'landing' ? (
