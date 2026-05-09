@@ -22,6 +22,8 @@ export type ResultsPage1Content = {
   scaleLabels: [string, string, string, string];
   warningTitle: string;
   warningBody: string;
+  inflamedImage: string;
+  tableHeaders: [string, string];
   metrics: Array<{ label: string; value: string; highlight: boolean }>;
   continueLabel: string;
 };
@@ -50,6 +52,8 @@ export type ResultsPage2Content = {
   goalSubLabel: string;
   comparisonHeaders: [string, string, string];
   comparisonRows: Array<{ metric: string; now: string; goal: string }>;
+  inflamedImage: string;
+  stabilizedImage: string;
   offerText: string;
   ctaLabel: string;
   guaranteeText: string;
@@ -143,7 +147,7 @@ const ENGLISH_QUESTIONS: QuestionConfig[] = [
       { value: 'physio', label: 'Physiotherapy' },
       { value: 'cortisone', label: 'Cortisone injections' },
       { value: 'ergonomic', label: 'Ergonomic chair / standing desk' },
-      { value: 'back-brace', label: `Back brace or ${ENGLISH_PRODUCT_NAME}` },
+      { value: 'back-brace', label: `Back brace` },
       { value: 'others', label: 'Others' },
       { value: 'nothing', label: 'Nothing yet' },
     ],
@@ -191,10 +195,10 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
     id: 'q2',
     screen: 'q2',
     layout: 'grid',
-    question: 'Wo spuren Sie Ihre Schmerzen am starksten?',
+    question: 'Wo spüren Sie Ihre Schmerzen am stärksten?',
     options: [
-      { value: 'lower-back', label: 'Unterer Rucken', bodyPart: 'lower-back' },
-      { value: 'hip-buttock', label: 'Hufte oder Gesass', bodyPart: 'hip-buttock' },
+      { value: 'lower-back', label: 'Unterer Rücken', bodyPart: 'lower-back' },
+      { value: 'hip-buttock', label: 'Hüfte oder Gesäß', bodyPart: 'hip-buttock' },
       { value: 'sciatica', label: 'Ausstrahlung ins Bein', sublabel: '(Ischias)', bodyPart: 'sciatica' },
       { value: 'everything', label: 'Von allem etwas', bodyPart: 'everything' },
       { value: 'not-sure', label: 'Ich bin nicht sicher', sublabel: 'es wandert', bodyPart: 'not-sure' },
@@ -213,7 +217,7 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
     id: 'q4',
     screen: 'q4',
     layout: 'grid',
-    question: 'Wie stark beeinflussen Ihre Ruckenschmerzen Ihren Alltag?',
+    question: 'Wie stark beeinflussen Ihre Rückenschmerzen Ihren Alltag?',
     options: [
       { value: 'a-lot', label: 'Stark', sublabel: 'Ich musste auf Dinge verzichten, die ich gern gemacht habe', emoji: '😣', bg: 'from-red-100 to-red-50' },
       { value: 'some', label: 'Teilweise', sublabel: 'Ich mache weiter, aber es ist immer da', emoji: '😤', bg: 'from-amber-100 to-amber-50' },
@@ -225,7 +229,7 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
     screen: 'q5',
     question: 'Wie lange haben Sie diese Schmerzen schon?',
     options: [
-      { value: 'over-year', label: 'Uber ein Jahr' },
+      { value: 'over-year', label: 'Über ein Jahr' },
       { value: 'past-year', label: 'Im letzten Jahr' },
       { value: 'past-months', label: 'Seit einigen Monaten' },
       { value: 'not-sure', label: 'Nicht sicher' },
@@ -234,15 +238,15 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
   {
     id: 'q6',
     screen: 'q6',
-    question: 'Welche Losungen haben Sie schon ausprobiert? (Mehrfachauswahl moglich)',
+    question: 'Welche Lösungen haben Sie schon ausprobiert? (Mehrfachauswahl moglich)',
     multiSelect: true,
     options: [
-      { value: 'medication', label: 'Schmerzmittel / Entzundungshemmer' },
+      { value: 'medication', label: 'Schmerzmittel / Entzündungshemmer' },
       { value: 'stretching', label: 'Dehnen / Yoga' },
       { value: 'physio', label: 'Physiotherapie' },
       { value: 'cortisone', label: 'Kortison-Injektionen' },
       { value: 'ergonomic', label: 'Ergonomischer Stuhl / Stehschreibtisch' },
-      { value: 'back-brace', label: `Rückenbandage oder ${GERMAN_PRODUCT_NAME}` },
+      { value: 'back-brace', label: `Rückenbandage` },
       { value: 'others', label: 'Sonstiges' },
       { value: 'nothing', label: 'Noch nichts' },
     ],
@@ -251,10 +255,10 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
     id: 'q7',
     screen: 'q7',
     layout: 'grid',
-    question: 'Was ist Ihre grosste Sorge, wenn sich Ihre Ruckenschmerzen nicht verandern?',
+    question: 'Was ist Ihre größte Sorge, wenn sich Ihre Rückenschmerzen nicht verändern?',
     options: [
       { value: 'mobility', label: 'Beweglichkeit verlieren', sublabel: 'Es wird mit der Zeit schlimmer', emoji: '🦽', bg: 'from-red-100 to-orange-50' },
-      { value: 'activities', label: 'Auf Aktivitaten verzichten', sublabel: 'Auf Dinge, die ich liebe, dauerhaft', emoji: '⛔', bg: 'from-orange-100 to-amber-50' },
+      { value: 'activities', label: 'Auf Aktivitäten verzichten', sublabel: 'Auf Dinge, die ich liebe, dauerhaft', emoji: '⛔', bg: 'from-orange-100 to-amber-50' },
       { value: 'money', label: 'Geld verschwenden', sublabel: 'Fur Behandlungen, die nicht helfen', emoji: '💸', bg: 'from-yellow-100 to-yellow-50' },
       { value: 'surgery', label: 'Eine Operation brauchen', sublabel: 'Als letzten Ausweg', emoji: '🏥', bg: 'from-purple-100 to-purple-50' },
     ],
@@ -263,12 +267,12 @@ const GERMAN_QUESTIONS: QuestionConfig[] = [
     id: 'q8',
     screen: 'q8',
     layout: 'grid',
-    question: 'Wie motiviert sind Sie, Ihre Ruckenschmerzen zu losen?',
+    question: 'Wie motiviert sind Sie, Ihre Rückenschmerzen zu lösen?',
     options: [
-      { value: 'extremely', label: 'Extrem', sublabel: 'Ich brauche jetzt eine Losung', emoji: '🔥', bg: 'from-amber-100 to-orange-50' },
+      { value: 'extremely', label: 'Maximal', sublabel: 'Ich brauche jetzt eine Lösung', emoji: '🔥', bg: 'from-amber-100 to-orange-50' },
       { value: 'very', label: 'Sehr motiviert', sublabel: 'Bereit, etwas Neues zu versuchen', emoji: '💪', bg: 'from-green-100 to-emerald-50' },
-      { value: 'somewhat', label: 'Einigermaen', sublabel: 'Ich wurde schon oft enttauscht', emoji: '🤞', bg: 'from-blue-100 to-sky-50' },
-      { value: 'depends', label: 'Kommt darauf an', sublabel: 'Auf die Losung', emoji: '🤔', bg: 'from-stone-100 to-stone-50' },
+      { value: 'somewhat', label: 'Einigermaßen', sublabel: 'Ich wurde schon oft enttäuscht', emoji: '🤞', bg: 'from-blue-100 to-sky-50' },
+      { value: 'depends', label: 'Kommt darauf an', sublabel: 'Auf die Lösung', emoji: '🤔', bg: 'from-stone-100 to-stone-50' },
     ],
   },
 ];
@@ -309,6 +313,8 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
       scaleLabels: ['Low', 'Normal', 'Medium', 'High <'],
       warningTitle: 'HIGH level.',
       warningBody: 'Your symptoms suggest significant SI joint instability. This is likely caused by prolonged sitting, repetitive movement, and lack of targeted joint support.',
+      inflamedImage: '/education/si-joint-inflamed.png',
+      tableHeaders: ['Metric', 'Assessment'],
       metrics: [
         { label: 'Pain type', value: 'Nerve irritation', highlight: true },
         { label: 'Root cause', value: 'SI joint dysfunction', highlight: true },
@@ -347,6 +353,8 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
         { metric: 'Morning Stiffness', now: 'Severe RED', goal: 'Gone GREEN' },
         { metric: 'Daily Pain Level', now: 'High RED', goal: 'Minimal GREEN' },
       ],
+      inflamedImage: '/education/si-joint-inflamed.png',
+      stabilizedImage: '/education/si-joint-stabilized.png',
       offerText: 'Based on your answers, you qualify for an exclusive offer. This offer is reserved for quiz completers only.',
       ctaLabel: 'CLAIM YOUR DISCOUNT',
       guaranteeText: '30-day money-back guarantee · Free shipping · Ships within 24h',
@@ -380,54 +388,58 @@ export const QUIZ_CONTENT_BY_LOCALE: Record<LocalizationLocale, QuizContent> = {
     },
     results1: {
       badge: 'Ihre Auswertung ist bereit',
-      title: 'Zusammenfassung Ihres Ruckenschmerz-Profils',
+      title: 'Zusammenfassung Ihres Rückenschmerz-Profils',
       subtitle: 'Basierend auf Ihren Antworten',
-      severityLabel: 'Grad der ISG-Fehlfunktion',
+      severityLabel: 'Grad der ISG-Blockade',
       severityValue: 'HOCH',
       scaleLabels: ['Niedrig', 'Normal', 'Mittel', 'Hoch <'],
       warningTitle: 'HOHES Niveau.',
-      warningBody: 'Ihre Symptome deuten auf eine deutliche ISG-Instabilitat hin. Das wird oft durch langes Sitzen, wiederholte Belastung und fehlende gezielte Gelenkstutzung verursacht.',
+      warningBody: 'Ihre Symptome deuten auf eine deutliche ISG-Instabilität hin. Das wird oft durch langes Sitzen, wiederholte Belastung und fehlende gezielte Gelenkstützung verursacht.',
+      inflamedImage: '/education/si-joint-inflamed-de.png',
+      tableHeaders: ['Metrik', 'Zusammenfassung'],
       metrics: [
         { label: 'Schmerztyp', value: 'Nervenreizung', highlight: true },
-        { label: 'Ursache', value: 'ISG-Fehlfunktion', highlight: true },
+        { label: 'Ursache', value: 'ISG-Blockade', highlight: true },
         { label: 'Verbesserungspotenzial', value: 'Hoch', highlight: true },
-        { label: 'Auswirkung auf den Alltag', value: 'Spurbar', highlight: false },
+        { label: 'Auswirkung auf den Alltag', value: 'Spürbar', highlight: false },
       ],
       continueLabel: 'Weiter ->',
     },
     education: {
-      badge: 'Die Wahrheit uber Ruckenschmerzen',
-      title: 'Warum hilft bei chronischen Ruckenschmerzen und Ischias nichts dauerhaft?',
+      badge: 'Die Wahrheit uber Rückenschmerzen',
+      title: 'Warum hilft bei chronischen Rückenschmerzen und Ischias nichts dauerhaft?',
       insight: 'Dehnen, Physiotherapie und Schmerzmittel wirken langfristig nicht, weil sie das ISG nicht behandeln - die eigentliche Ursache Ihrer Schmerzen.',
       symptomTags: ['Schmerzmittel x', 'Dehnen x', 'Physio x'],
       symptomFooter: 'Behandelt nur Symptome',
-      solutionTags: ['ISG check', 'Stabilisierung check', `${GERMAN_PRODUCT_NAME} check`],
+      solutionTags: ['ISG', 'Stabilisierung', `${GERMAN_PRODUCT_NAME}`],
       solutionFooter: 'Behebt die Ursache',
-      conclusion: `Wenn Sie Ihre Ruckenschmerzen wirklich losen wollen, mussen Sie das ISG stabilisieren - genau dafur wurde der ${GERMAN_PRODUCT_NAME} entwickelt.`,
+      conclusion: `Wenn Sie Ihre Rückenschmerzen wirklich lösen wollen, müssen Sie das ISG stabilisieren - genau dafür wurde der ${GERMAN_PRODUCT_NAME} entwickelt.`,
       continueLabel: 'Weiter ->',
     },
     results2: {
       badge: 'Ihr Ergebnis ist bereit',
       titleStart: 'Sie sind nur noch',
       titleHighlight: '30 Tage',
-      titleEnd: 'von einem schmerzfreien Rucken entfernt!',
+      titleEnd: 'von einem schmerzfreien Rücken entfernt!',
       checklist: [
         `Erste Erleichterung schon nach 1 Tag mit dem ${GERMAN_PRODUCT_NAME}.`,
         'Deutlich weniger Schmerzen und bessere Beweglichkeit bis zum {date}.',
       ],
-      nowLabel: 'ISG JETZT',
-      nowSubLabel: 'Entzundet & Instabil',
+      nowLabel: 'JETZT',
+      nowSubLabel: 'Entzündet & Instabil',
       goalLabel: 'IHR ZIEL',
       goalSubLabel: 'Stabilisiert & Schmerzfrei',
       comparisonHeaders: ['Merkmal', 'Jetzt', 'Ihr Ziel'],
       comparisonRows: [
-        { metric: 'ISG-Stabilitat', now: 'Instabil ROT', goal: 'Stabilisiert GRUN' },
-        { metric: 'Morgensteifigkeit', now: 'Stark ROT', goal: 'Verschwunden GRUN' },
-        { metric: 'Tagliches Schmerzniveau', now: 'Hoch ROT', goal: 'Minimal GRUN' },
+        { metric: 'ISG-Stabilität', now: 'Instabil', goal: 'Stabilisiert' },
+        { metric: 'Morgensteifigkeit', now: 'Stark', goal: 'Verschwunden' },
+        { metric: 'Tagliches Schmerzniveau', now: 'Hoch', goal: 'Minimal' },
       ],
+      inflamedImage: '/education/si-joint-inflamed-de.png',
+      stabilizedImage: '/education/si-joint-stabilized-de.png',
       offerText: 'Basierend auf Ihren Antworten qualifizieren Sie sich fur ein exklusives Angebot. Dieses Angebot ist nur fur Quiz-Teilnehmer reserviert.',
       ctaLabel: 'RABATT SICHERN',
-      guaranteeText: '30 Tage Geld-zuruck-Garantie · Kostenloser Versand · Versand innerhalb von 24h',
+      guaranteeText: '90 Tage Geld-zuruck-Garantie · Kostenloser Versand · Versand innerhalb von 24h',
     },
   },
 };

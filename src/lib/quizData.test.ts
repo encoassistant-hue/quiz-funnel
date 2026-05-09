@@ -32,8 +32,8 @@ test('uses localized q6 back-brace labels', () => {
     .find((question) => question.id === 'q6')
     ?.options.find((option) => option.value === 'back-brace');
 
-  assert.equal(englishBackBrace?.label, 'Back brace or OrthoBelt');
-  assert.equal(germanBackBrace?.label, 'Rückenbandage oder Orthogürtel');
+  assert.equal(englishBackBrace?.label, 'Back brace');
+  assert.equal(germanBackBrace?.label, 'Rückenbandage');
 });
 
 test('uses localized product names in landing testimonials', () => {

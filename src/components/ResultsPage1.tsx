@@ -97,7 +97,7 @@ export default function ResultsPage1({ onContinue, content }: ResultsPage1Props)
 
           <div className="w-full rounded-xl overflow-hidden mb-5">
             <Image
-              src={withBasePath('/education/si-joint-inflamed.png')}
+              src={withBasePath(content.inflamedImage)}
               alt="SI Joint inflammation"
               width={1408}
               height={768}
@@ -135,8 +135,8 @@ export default function ResultsPage1({ onContinue, content }: ResultsPage1Props)
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-stone-50 border-b border-stone-200">
-                <th className="text-left px-4 py-3 text-stone-500 font-semibold">Metric</th>
-                <th className="text-right px-4 py-3 text-stone-500 font-semibold">Assessment</th>
+              <th className="text-left px-4 py-3 text-stone-500 font-semibold">{content.tableHeaders[0]}</th>
+              <th className="text-right px-4 py-3 text-stone-500 font-semibold">{content.tableHeaders[1]}</th>
               </tr>
             </thead>
             <tbody>

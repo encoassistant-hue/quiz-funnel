@@ -85,7 +85,7 @@ export default function ResultsPage2({ onClaimDiscount, content, locale, product
   }, []);
 
   return (
-    <div className="w-full max-w-xl mx-auto px-6 py-10 max-md:pb-[125px]">
+    <div className="w-full max-w-xl mx-auto px-6 py-10 max-md:pb-31.25">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function ResultsPage2({ onClaimDiscount, content, locale, product
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-2">
               <Image
-                src={withBasePath('/education/si-joint-inflamed.png')}
+                src={withBasePath(content.inflamedImage)}
                 alt="SI Joint inflamed"
                 width={1408}
                 height={768}
@@ -128,7 +128,7 @@ export default function ResultsPage2({ onClaimDiscount, content, locale, product
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
             <div className="w-full rounded-lg overflow-hidden mb-2">
               <Image
-                src={withBasePath('/education/si-joint-stabilized.png')}
+                src={withBasePath(content.stabilizedImage)}
                 alt="SI Joint stabilised"
                 width={1408}
                 height={768}
