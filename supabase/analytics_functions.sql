@@ -139,6 +139,12 @@ begin
 end
 $$;
 
+create index if not exists quiz_events_analytics_filter_idx
+  on public.quiz_events (event_type, environment, locale, version, created_at, session_id, step_id);
+
+create index if not exists quiz_events_recent_idx
+  on public.quiz_events (created_at desc, id desc);
+
 create or replace function public.analytics_overview(
   p_from timestamptz default null,
   p_to timestamptz default null,
@@ -201,87 +207,108 @@ as $$
       (11, 'q8'),
       (12, 'results2')
   ),
-  filtered_steps as (
-    select distinct session_id, step_id
+  filtered_events as (
+    select session_id, event_type, step_id
     from public.quiz_events
-    where event_type = 'step_view'
+    where event_type in ('step_view', 'cta_click')
+      and (
+        event_type = 'step_view'
+        or step_id = 'results2'
+      )
       and (p_from is null or created_at >= p_from)
       and (p_to is null or created_at < p_to)
       and (p_version is null or version = p_version)
       and (p_environment is null or environment = p_environment)
       and (p_locale is null or locale = p_locale)
   ),
-  filtered_cta_clicks as (
-    select distinct session_id
-    from public.quiz_events
-    where event_type = 'cta_click'
-      and step_id = 'results2'
-      and (p_from is null or created_at >= p_from)
-      and (p_to is null or created_at < p_to)
-      and (p_version is null or version = p_version)
-      and (p_environment is null or environment = p_environment)
-      and (p_locale is null or locale = p_locale)
+  session_flags as (
+    select
+      session_id,
+      bool_or(event_type = 'step_view' and step_id = 'landing') as landing,
+      bool_or(event_type = 'step_view' and step_id = 'q1') as q1,
+      bool_or(event_type = 'step_view' and step_id = 'q2') as q2,
+      bool_or(event_type = 'step_view' and step_id = 'q3') as q3,
+      bool_or(event_type = 'step_view' and step_id = 'q4') as q4,
+      bool_or(event_type = 'step_view' and step_id = 'q5') as q5,
+      bool_or(event_type = 'step_view' and step_id = 'results1') as results1,
+      bool_or(event_type = 'step_view' and step_id = 'q6') as q6,
+      bool_or(event_type = 'step_view' and step_id = 'education') as education,
+      bool_or(event_type = 'step_view' and step_id = 'q7') as q7,
+      bool_or(event_type = 'step_view' and step_id = 'q8') as q8,
+      bool_or(
+        (event_type = 'step_view' and step_id = 'results2')
+        or (event_type = 'cta_click' and step_id = 'results2')
+      ) as results2,
+      bool_or(event_type = 'cta_click' and step_id = 'results2') as results2_cta
+    from filtered_events
+    group by session_id
   ),
-  filtered_results2_reached as (
-    select session_id
-    from filtered_steps
-    where step_id = 'results2'
-
-    union
-
-    select session_id
-    from filtered_cta_clicks
+  step_flags as (
+    select
+      session_flags.session_id,
+      flags.position,
+      flags.step_id,
+      flags.reached
+    from session_flags
+    cross join lateral (
+      values
+        (1, 'landing', session_flags.landing),
+        (2, 'q1', session_flags.q1),
+        (3, 'q2', session_flags.q2),
+        (4, 'q3', session_flags.q3),
+        (5, 'q4', session_flags.q4),
+        (6, 'q5', session_flags.q5),
+        (7, 'results1', session_flags.results1),
+        (8, 'q6', session_flags.q6),
+        (9, 'education', session_flags.education),
+        (10, 'q7', session_flags.q7),
+        (11, 'q8', session_flags.q8),
+        (12, 'results2', session_flags.results2)
+    ) as flags(position, step_id, reached)
   )
   select
-    current.position as step_position,
-    current.step_id,
+    step_order.position as step_position,
+    step_order.step_id,
+    count(step_flags.session_id) filter (where step_flags.reached)::bigint as reached,
     case
-      when current.step_id = 'results2' then count(distinct results2_reached.session_id)::bigint
-      else count(distinct current_sessions.session_id)::bigint
-    end as reached,
-    case
-      when current.step_id = 'results2' then count(distinct cta_sessions.session_id)::bigint
-      else count(distinct next_sessions.session_id)::bigint
+      when step_order.step_id = 'results2'
+        then count(session_flags.session_id) filter (where session_flags.results2_cta)::bigint
+      else count(step_flags.session_id) filter (where step_flags.reached and next_flags.reached)::bigint
     end as continued,
+    (
+      count(step_flags.session_id) filter (where step_flags.reached)
+      - case
+          when step_order.step_id = 'results2'
+            then count(session_flags.session_id) filter (where session_flags.results2_cta)
+          else count(step_flags.session_id) filter (where step_flags.reached and next_flags.reached)
+        end
+    )::bigint as dropped,
     case
-      when current.step_id = 'results2' then (count(distinct results2_reached.session_id) - count(distinct cta_sessions.session_id))::bigint
-      else (count(distinct current_sessions.session_id) - count(distinct next_sessions.session_id))::bigint
-    end as dropped,
-    case
-      when current.step_id = 'results2' and count(distinct results2_reached.session_id) = 0 then 0
-      when current.step_id <> 'results2' and count(distinct current_sessions.session_id) = 0 then 0
+      when count(step_flags.session_id) filter (where step_flags.reached) = 0 then 0
       else round(
         (
-          case
-            when current.step_id = 'results2' then (count(distinct results2_reached.session_id) - count(distinct cta_sessions.session_id))::numeric
-            else (count(distinct current_sessions.session_id) - count(distinct next_sessions.session_id))::numeric
-          end
-          /
-          case
-            when current.step_id = 'results2' then count(distinct results2_reached.session_id)
-            else count(distinct current_sessions.session_id)
-          end
-        ) * 100,
+          count(step_flags.session_id) filter (where step_flags.reached)
+          - case
+              when step_order.step_id = 'results2'
+                then count(session_flags.session_id) filter (where session_flags.results2_cta)
+              else count(step_flags.session_id) filter (where step_flags.reached and next_flags.reached)
+            end
+        )::numeric
+        / count(step_flags.session_id) filter (where step_flags.reached)
+        * 100,
         2
       )
     end as dropoff_rate
-  from step_order current
-  left join filtered_steps current_sessions
-    on current_sessions.step_id = current.step_id
-  left join step_order next_step
-    on next_step.position = current.position + 1
-  left join filtered_steps next_sessions
-    on next_sessions.step_id = next_step.step_id
-    and next_sessions.session_id = current_sessions.session_id
-  left join filtered_results2_reached results2_reached
-    on current.step_id = 'results2'
-  left join filtered_cta_clicks cta_sessions
-    on cta_sessions.session_id = case
-      when current.step_id = 'results2' then results2_reached.session_id
-      else current_sessions.session_id
-    end
-  group by current.position, current.step_id
-  order by current.position;
+  from step_order
+  left join step_flags
+    on step_flags.position = step_order.position
+  left join step_flags next_flags
+    on next_flags.session_id = step_flags.session_id
+    and next_flags.position = step_order.position + 1
+  left join session_flags
+    on session_flags.session_id = step_flags.session_id
+  group by step_order.position, step_order.step_id
+  order by step_order.position;
 $$;
 
 create or replace function public.analytics_answer_distribution(
