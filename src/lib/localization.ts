@@ -11,7 +11,7 @@ export const LOCALIZATIONS: Record<LocalizationSlug, Localization> = {
     locale: 'en-US',
     market: 'us',
     slug: 'orthobelt-us',
-    productUrl: 'https://us.orthotal.com/products/orthobelt',
+    productUrl: 'https://www.trypeakflex.com/products/orthobelt-si',
   },
 };
 
